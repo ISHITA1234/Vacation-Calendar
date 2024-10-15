@@ -39,3 +39,55 @@ The **Vacation Calendar** is a web-based application built using the MERN stack 
    ```bash
    git clone https://github.com/your-username/vacation-calendar.git
    cd vacation-calendar
+
+2. Navigate to the backend folder:
+
+   ```bash
+   cd backend
+
+3. Install backend dependencies:
+
+   ```bash
+   npm install
+
+4. Run the backend server:
+
+   ```bash
+   node index.js
+
+The server will be running on http://localhost:27107.
+
+
+### Frontend Setup
+
+1. Navigate to the frontend folder:
+
+   ```bash   
+   cd frontend
+
+2. Install frontend dependencies:
+
+   ```bash
+   npm install
+
+3. Start the frontend server:
+
+   ```bash
+   npm run dev
+
+## Folder Structure
+
+/vacation-calendar
+  /backend                    # Node.js Backend
+    /routes
+      vacationRoutes.js
+    db.js
+    index.js
+  /frontend                    # React Frontend
+    /src
+      /components
+        VacationCalendar.jsx
+      /services
+        vacationService.jsx
+      App.jsx
+      main.jsx
