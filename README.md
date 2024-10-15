@@ -77,17 +77,19 @@ The server will be running on http://localhost:27107.
 
 ## Folder Structure
 
-/vacation-calendar
-  /backend                    # Node.js Backend
-    /routes
-      vacationRoutes.js
-    db.js
-    index.js
-  /frontend                    # React Frontend
-    /src
-      /components
-        VacationCalendar.jsx
-      /services
-        vacationService.jsx
-      App.jsx
-      main.jsx
+.
+├── /vacation-calendar
+│   ├── /backend                # Node.js Backend
+│   │   ├── /routes
+│   │   │   └── vacationRoutes.js
+│   │   ├── db.js
+│   │   └── index.js
+│   └── /frontend               # React Frontend
+│       ├── /src
+│       │   ├── /components
+│       │   │   └── VacationCalendar.jsx
+│       │   ├── /services
+│       │   │   └── vacationService.jsx
+│       │   ├── App.jsx
+│       │   └── main.jsx
+
