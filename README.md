@@ -2,6 +2,9 @@
 
 The **Vacation Calendar** is a web-based application built using the MERN stack (MongoDB, Express, React, and Node.js). It allows employees' vacations to be displayed on a calendar, with two types of vacation events: daily events and multi-day events. The calendar highlights each employee's vacation with unique colors, ensuring clarity, even when vacation dates overlap.
 
+## Live Demo Link:
+   https://vacation-calendar-frontend.onrender.com/
+
 ## Features
 
 - **View Vacations**: Displays vacation data for multiple employees.
