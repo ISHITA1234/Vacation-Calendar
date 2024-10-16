@@ -80,6 +80,9 @@ The server will be running on http://localhost:27107.
    ```bash
    npm run dev
 
+## Web-site Screenshot
+![Here is an image related to my project:](/frontend/src/assets/Vacation_Calender.png)
+
 ## Folder Structure
 
 .<br>
@@ -88,7 +91,7 @@ The server will be running on http://localhost:27107.
 │   │   ├── /routes<br>
 │   │   │   └── vacationRoutes.js<br>
 │   │   ├── db.js<br>
-|   |   ├── seed.js<br>
+│   │   ├── seed.js<br>
 │   │   └── index.js<br>
 │   └── /frontend               # React Frontend<br>
 │       ├── /src<br>
