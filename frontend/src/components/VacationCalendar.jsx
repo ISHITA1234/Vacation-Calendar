@@ -7,22 +7,16 @@ import './VacationCalendar.css';
 
 const localizer = momentLocalizer(moment);
 
-// Define a list of colors to assign each employee a unique color
 const employeeColors = [
-  '#ff7f7f', // Red
-  '#7fbcff', // Blue
-  '#ffbc7f', // Orange
-  '#7fff7f', // Green
-  '#bc7fff', // Purple
-  '#ff7fbc', // Pink
-  '#7fffff', // Cyan
-  '#bfff7f', // Lime
+  '#ff7f7f', '#7fbcff', '#ffbc7f', '#7fff7f',
+  '#bc7fff', '#ff7fbc', '#7fffff', '#bfff7f',
 ];
 
 const VacationCalendar = () => {
   const [employees, setEmployees] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState('All');
+  const [selectedVacationType, setSelectedVacationType] = useState('All');
 
   useEffect(() => {
     getVacations().then((data) => {
@@ -34,7 +28,9 @@ const VacationCalendar = () => {
           end: new Date(vacation.endDate),
           employeeName: employee.name,
           type: vacation.type,
-          color: employeeColors[employeeIndex % employeeColors.length] // Assign a unique color based on employee index
+          color: employeeColors[employeeIndex % employeeColors.length],
+          icon: vacation.type === 'daily' ? '🕒' : '⏳',
+          allDay: vacation.type === 'daily' // Mark daily events as all-day events
         }))
       );
       setEvents(calendarEvents);
@@ -44,44 +40,59 @@ const VacationCalendar = () => {
   const handleEmployeeFilter = (event) => {
     const filteredEmployee = event.target.value;
     setSelectedEmployee(filteredEmployee);
-    if (filteredEmployee === 'All') {
-      getVacations().then((data) => {
-        const allEvents = data.flatMap((employee, employeeIndex) =>
-          employee.vacations.map((vacation) => ({
+    filterVacations(filteredEmployee, selectedVacationType);
+  };
+
+  const handleVacationTypeFilter = (event) => {
+    const filteredVacationType = event.target.value;
+    setSelectedVacationType(filteredVacationType);
+    filterVacations(selectedEmployee, filteredVacationType);
+  };
+
+  const filterVacations = (employee, vacationType) => {
+    getVacations().then((data) => {
+      let filteredData = data;
+
+      if (employee !== 'All') {
+        filteredData = data.filter((emp) => emp.name === employee);
+      }
+
+      const filteredEvents = filteredData.flatMap((employee, employeeIndex) =>
+        employee.vacations
+          .filter((vacation) => vacationType === 'All' || vacation.type === vacationType)
+          .map((vacation) => ({
             title: `${employee.name} - ${vacation.description}`,
             start: new Date(vacation.startDate),
             end: new Date(vacation.endDate),
             employeeName: employee.name,
             type: vacation.type,
-            color: employeeColors[employeeIndex % employeeColors.length] // Assign a unique color based on employee index
+            color: employeeColors[employeeIndex % employeeColors.length],
+            icon: vacation.type === 'daily' ? '🕒' : '⏳',
+            allDay: vacation.type === 'daily' // Mark daily events as all-day
           }))
-        );
-        setEvents(allEvents);
-      });
-    } else {
-      getVacations().then((data) => {
-        const filteredEvents = data
-          .filter((employee) => employee.name === filteredEmployee)
-          .flatMap((employee, employeeIndex) =>
-            employee.vacations.map((vacation) => ({
-              title: `${employee.name} - ${vacation.description}`,
-              start: new Date(vacation.startDate),
-              end: new Date(vacation.endDate),
-              employeeName: employee.name,
-              type: vacation.type,
-              color: employeeColors[employeeIndex % employeeColors.length] // Assign a unique color based on employee index
-            }))
-          );
-        setEvents(filteredEvents);
-      });
-    }
+      );
+      setEvents(filteredEvents);
+    });
+  };
+
+  const eventStyleGetter = (event) => {
+    return {
+      style: {
+        backgroundColor: event.color,
+        color: 'white',
+        borderRadius: '5px',
+        border: 'none',
+        padding: '2px 4px',
+        textAlign: 'center',
+      },
+    };
   };
 
   return (
     <div className="calendar-container">
       <h2>Vacation Calendar</h2>
       
-      {/* Employee Filter Dropdown */}
+      {/* Filters */}
       <div className="filter-container">
         <label>Filter by Employee:</label>
         <select onChange={handleEmployeeFilter} value={selectedEmployee}>
@@ -92,6 +103,13 @@ const VacationCalendar = () => {
             </option>
           ))}
         </select>
+
+        <label>Filter by Vacation Type:</label>
+        <select onChange={handleVacationTypeFilter} value={selectedVacationType}>
+          <option value="All">All Types</option>
+          <option value="daily">Daily</option>
+          <option value="multi-day">Multi-day</option>
+        </select>
       </div>
 
       {/* Vacation Calendar */}
@@ -101,24 +119,35 @@ const VacationCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500, margin: '20px 0' }}
-        eventPropGetter={(event) => ({
-          style: {
-            backgroundColor: event.color, // Use employee-specific color
-            color: 'white',
-            borderRadius: '5px',
-            border: 'none',
-            padding: '2px 4px',
-            textAlign: 'center'
-          },
-        })}
+        eventPropGetter={eventStyleGetter}
         views={['month', 'week', 'day']}
         popup={true}
+        components={{
+          event: (event) => (
+            <span>
+              {event.event.icon} {event.title}
+            </span>
+          ),
+        }}
         onSelectEvent={(event) =>
           alert(
             `${event.title}\n${moment(event.start).format('MMM Do YYYY')} - ${moment(event.end).format('MMM Do YYYY')}`
           )
         }
       />
+
+      {/* Legend */}
+      <div className="legend-container">
+        <h3>Legend</h3>
+        <div className="legend-item">
+          <span className="legend-icon">🕒</span>
+          <span>Daily Event</span>
+        </div>
+        <div className="legend-item">
+          <span className="legend-icon">⏳</span>
+          <span>Multi-day Event</span>
+        </div>
+      </div>
     </div>
   );
 };

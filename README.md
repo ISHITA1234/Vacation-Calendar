@@ -9,7 +9,8 @@ The **Vacation Calendar** is a web-based application built using the MERN stack 
 - **Employee Color Coding**: Each employee is assigned a unique color for their vacations.
 - **Overlapping Events**: Even if vacations overlap, each employee’s events are shown in their respective colors.
 - **Employee Filtering**: Allows filtering of the calendar by employees, displaying only their vacations.
-- **Google Calendar-like Interface**: UI/UX is designed to mimic the clarity and functionality of Google Calendar.
+- **Vacation Type Filtering**: Allows filtering of the calendar by type of vacation (daily or multi-day).
+- **Vacation Type Distinguisher**: Distinguishes type of vacation with icon. This legend will show what each icon  represents (🕒 for daily vacations and ⏳ for multi-day vacations).
 
 ## Tech Stack
 
@@ -50,7 +51,11 @@ The **Vacation Calendar** is a web-based application built using the MERN stack 
    ```bash
    npm install
 
-4. Run the backend server:
+4. Run seed.js to insert data into MongoDB:
+   ```bash
+   node seed.js
+
+5. Run the backend server:
 
    ```bash
    node index.js
@@ -77,19 +82,20 @@ The server will be running on http://localhost:27107.
 
 ## Folder Structure
 
-.
-├── /vacation-calendar
-│   ├── /backend                # Node.js Backend
-│   │   ├── /routes
-│   │   │   └── vacationRoutes.js
-│   │   ├── db.js
-│   │   └── index.js
-│   └── /frontend               # React Frontend
-│       ├── /src
-│       │   ├── /components
-│       │   │   └── VacationCalendar.jsx
-│       │   ├── /services
-│       │   │   └── vacationService.jsx
-│       │   ├── App.jsx
-│       │   └── main.jsx
+.<br>
+├── /vacation-calendar<br>
+│   ├── /backend                # Node.js Backend<br>
+│   │   ├── /routes<br>
+│   │   │   └── vacationRoutes.js<br>
+│   │   ├── db.js<br>
+|   |   ├── seed.js<br>
+│   │   └── index.js<br>
+│   └── /frontend               # React Frontend<br>
+│       ├── /src<br>
+│       │   ├── /components<br>
+│       │   │   └── VacationCalendar.jsx<br>
+│       │   ├── /services<br>
+│       │   │   └── vacationService.jsx<br>
+│       │   ├── App.jsx<br>
+│       │   └── main.jsx<br>
 
