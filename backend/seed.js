@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
-const Employee = require('./db'); // Adjust this to the correct path
+const Employee = require('./db'); // Import the Employee model (adjust the path as needed)
 
 // Connect to the MongoDB database
 mongoose.connect(
   'mongodb+srv://ishitad123:Babla%401234@mydb.qeypvet.mongodb.net/AssignmentApp',
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  { useNewUrlParser: true, useUnifiedTopology: true } // Use options for updated connection behavior
 )
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.log('Failed to connect to MongoDB:', err));
+.then(() => console.log('Connected to MongoDB')) // Log a success message upon successful connection
+.catch(err => console.log('Failed to connect to MongoDB:', err)); // Log any connection errors
 
-// Employee data to seed
+// Employee data to seed into the database
 const employees = [
   {
     id: '1',
@@ -19,13 +19,13 @@ const employees = [
         description: 'Annual Leave',
         startDate: new Date('2024-10-10'),
         endDate: new Date('2024-10-22'),
-        type: 'multi-day'
+        type: 'multi-day' // Multi-day event
       },
       {
         description: 'Emergency Leave',
         startDate: new Date('2024-10-02'),
         endDate: new Date('2024-10-02'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       }
     ]
   },
@@ -37,7 +37,7 @@ const employees = [
         description: 'Sick Leave',
         startDate: new Date('2024-10-11'),
         endDate: new Date('2024-10-11'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       }
     ]
   },
@@ -49,7 +49,7 @@ const employees = [
         description: 'Vacation to Paris',
         startDate: new Date('2024-10-21'),
         endDate: new Date('2024-11-05'),
-        type: 'multi-day'
+        type: 'multi-day' // Multi-day event
       }
     ]
   },
@@ -61,7 +61,7 @@ const employees = [
         description: 'Sid`s Day Off',
         startDate: new Date('2024-10-20'),
         endDate: new Date('2024-10-20'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       }
     ]
   },
@@ -73,7 +73,7 @@ const employees = [
         description: 'Festival Time Day Off',
         startDate: new Date('2024-10-20'),
         endDate: new Date('2024-10-20'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       }
     ]
   },
@@ -85,31 +85,30 @@ const employees = [
         description: 'Day Off',
         startDate: new Date('2024-10-07'),
         endDate: new Date('2024-10-07'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       },
       {
         description: 'Festival Day Off',
         startDate: new Date('2024-10-20'),
         endDate: new Date('2024-10-20'),
-        type: 'daily'
+        type: 'daily' // Single-day event
       }
     ]
   }
-
 ];
 
-// Function to insert the employee data
+// Function to insert the employee data into the database
 const seedEmployees = async () => {
   try {
-    await Employee.deleteMany({}); // Optional: Clears the collection before inserting
-    await Employee.insertMany(employees);
-    console.log('Employee data seeded successfully!');
+    await Employee.deleteMany({}); // Optional: Clear the Employee collection before inserting new data
+    await Employee.insertMany(employees); // Insert the predefined employee data
+    console.log('Employee data seeded successfully!'); // Log success message
   } catch (err) {
-    console.log('Error seeding employee data:', err);
+    console.log('Error seeding employee data:', err); // Log any errors encountered during seeding
   } finally {
-    mongoose.connection.close(); // Close the database connection
+    mongoose.connection.close(); // Close the MongoDB connection once seeding is complete
   }
 };
 
-// Execute the seed function
+// Execute the seed function to insert the data
 seedEmployees();
