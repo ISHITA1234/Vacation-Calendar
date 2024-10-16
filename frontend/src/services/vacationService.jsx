@@ -1,7 +1,8 @@
 import axios from 'axios'; // Importing axios for making HTTP requests
 
 // Define the base API URL for fetching vacation data
-const API_URL = 'http://localhost:27017/api/vacations';
+// const API_URL = 'http://localhost:27017/api/vacations';
+const API_URL = "https://vacation-calendar.onrender.com"
 
 /**
  * Function to fetch vacation data from the API.
